@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from subprocess import Popen, PIPE
 
 __author__ = "Andreas Lochwitz"
@@ -20,7 +23,8 @@ def getIPs():
     ifconfigProcess = Popen(['ifconfig'], stdout=PIPE)
     grepProcess = Popen(["grep", "inet "], stdin=ifconfigProcess.stdout, stdout=PIPE)
     awkProcess = Popen(["awk", awkProgram], stdin=grepProcess.stdout, stdout=PIPE)
-    output = awkProcess.communicate()[0].decode('ascii')
+    output = awkProcess.communicate()[0]
+    output = output.decode('utf8')
     return output.strip().split(" ")
 
 if __name__ == "__main__":
